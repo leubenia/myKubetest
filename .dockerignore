@@ -1,0 +1,14 @@
+bitbucket-pipelines.yml
+
+**/*.env
+!**/test.env
+
+**/node_modules
+**/dist
+
+**/.eslintrc*
+**/.eslintignore
+**/.prettierrc
+**/.git*
+**/.vscode
+**/.idea

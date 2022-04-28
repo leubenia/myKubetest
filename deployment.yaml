@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: k8s
+      tier: app
+  template:
+    metadata:
+      labels:
+        app: k8s
+        tier: app
+    spec:
+      containers:
+      - name: k8s
+        image: hprinces2/k8s-test-image:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000

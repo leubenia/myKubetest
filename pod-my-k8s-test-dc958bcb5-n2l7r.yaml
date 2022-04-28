@@ -1,0 +1,129 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-04-27T07:11:28Z"
+  generateName: my-k8s-test-dc958bcb5-
+  labels:
+    app: my-k8s-test
+    pod-template-hash: dc958bcb5
+  name: my-k8s-test-dc958bcb5-n2l7r
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: my-k8s-test-dc958bcb5
+    uid: 66d6aab2-2016-4503-b67b-18b04322f719
+  resourceVersion: "25495"
+  uid: 8e1fb261-947a-4816-867c-8f84bbf6f1b4
+spec:
+  containers:
+  - image: hdodo/isdodok8s:latest
+    imagePullPolicy: Always
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /
+        port: 3000
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: my-k8s-test
+    ports:
+    - containerPort: 3000
+      protocol: TCP
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 500m
+        memory: 128Mi
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-flp7g
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: docker-desktop
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-flp7g
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-04-27T07:11:28Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-04-27T07:11:28Z"
+    message: 'containers with unready status: [my-k8s-test]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-04-27T07:11:28Z"
+    message: 'containers with unready status: [my-k8s-test]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-04-27T07:11:28Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - image: hdodo/isdodok8s
+    imageID: ""
+    lastState: {}
+    name: my-k8s-test
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      waiting:
+        message: Back-off pulling image "hdodo/isdodok8s"
+        reason: ImagePullBackOff
+  hostIP: 192.168.65.4
+  phase: Pending
+  podIP: 10.1.0.22
+  podIPs:
+  - ip: 10.1.0.22
+  qosClass: Guaranteed
+  startTime: "2022-04-27T07:11:28Z"

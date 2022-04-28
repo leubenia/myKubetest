@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-db
+spec:
+  selector:
+    matchLabels:
+      app: my-db
+  serviceName: my-db
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: my-db
+    spec:
+      containers:
+        - name: init-postgres
+          image: postgres:14.2
+          command:
+            - bash
+            - "-c"
+            - |
+              set -ex
+              # Generate mysql server-id from pod ordinal index.
+              [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+              ordinal=${BASH_REMATCH[1]}
+              echo [mysqld] > /mnt/conf.d/server-id.cnf
+              # Add an offset to avoid reserved server-id=0 value.
+              echo server-id=$((100 + $ordinal)) >> /mnt/conf.d/server-id.cnf
+              # Copy appropriate conf.d files from config-map to emptyDir.
+              if [[ $ordinal -eq 0 ]]; then
+                cp /mnt/config-map/primary.cnf /mnt/conf.d/
+              else
+                cp /mnt/config-map/replica.cnf /mnt/conf.d/
+              fi
+            volumeMounts:
+              - mountPath: 
+                name: 

@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:14.2
+    ports:
+      - '5432:5432'
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - db_data_test:/var/lib/postgresql/data
+      
+  k8s:
+    image: hprinces2/k8s-test-image:v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+      - '9221:9229'
+    volumes:
+      - .:/app
+      - test_node_modules:/app/node_modules
+    working_dir: /app
+    command: yarn start:debug
+    restart: always
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+volumes:
+  test_node_modules:
+  db_data_test:
