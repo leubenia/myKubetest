@@ -7,6 +7,6 @@ export class AppService {
   }
 
   getHealth(): string {
-    return 'IsDodo';
+    return 'is dodo2';
   }
 }

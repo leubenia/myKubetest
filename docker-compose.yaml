@@ -14,7 +14,7 @@ services:
       - db_data_test:/var/lib/postgresql/data
       
   k8s:
-    image: hprinces2/k8s-test-image:v1
+    image: hprinces2/k8s-test-image:v2
     build:
       context: .
       dockerfile: Dockerfile

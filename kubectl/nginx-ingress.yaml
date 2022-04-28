@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginx
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: k8s
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
+    - http:
+        paths:
+          - backend:
+              service:
+                name: k8s2
+                port:
+                  number: 3001
+            path: /test
+            pathType: Prefix

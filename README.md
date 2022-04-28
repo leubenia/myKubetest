@@ -1,7 +1,7 @@
 ## k8s 파일 설정
 
 ```bash
-kubectl apply -f deployment.yaml
+kubectl apply -f 등등등등....
 ```
 
 apiVersion: apps/v1  버전 그렇게 신경안씀..
@@ -29,5 +29,3 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 3000                 포트겟지..?
-# k8sMytest
-# k8sMytest
