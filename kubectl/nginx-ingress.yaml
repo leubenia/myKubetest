@@ -2,23 +2,28 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-nginx
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - http:
+    - host: myserver.local.com
+      http:
         paths:
           - backend:
               service:
                 name: k8s
                 port:
                   number: 3000
-            path: /
+            path: /(/|$)(.*)
             pathType: Prefix
-    - http:
+    - host: myserver.local.com
+      http:
         paths:
           - backend:
               service:
                 name: k8s2
                 port:
                   number: 3001
-            path: /test
+            path: /test(/|$)(.*)
             pathType: Prefix

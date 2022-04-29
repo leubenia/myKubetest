@@ -29,3 +29,9 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 3000                 포트겟지..?
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+```
+
+kube nginx 기본 적으로 다운?? 받아야되는거..?
