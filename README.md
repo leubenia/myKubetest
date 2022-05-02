@@ -35,3 +35,38 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ```
 
 kube nginx 기본 적으로 다운?? 받아야되는거..?
+
+
+
+
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: "2022-05-02T01:47:25Z"
+  generation: 1
+  name: demo-localhost
+  namespace: default
+  resourceVersion: "3396"
+  uid: 0f8ef19e-c01c-48c8-9ab3-acd3ff6d5e35
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: demo.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: demo
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - hostname: localhost
+
+
+메모용..!

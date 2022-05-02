@@ -4,10 +4,12 @@ metadata:
   name: ingress-nginx
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
+  ingressClassName: nginx
   rules:
-    - host: myserver.local.com
+    - host: kubernetes.docker.internal
       http:
         paths:
           - backend:
@@ -15,9 +17,9 @@ spec:
                 name: k8s
                 port:
                   number: 3000
-            path: /(/|$)(.*)
+            path: /test1(/|$)(.*)
             pathType: Prefix
-    - host: myserver.local.com
+    - host: kubernetes.docker.internal
       http:
         paths:
           - backend:
@@ -25,5 +27,5 @@ spec:
                 name: k8s2
                 port:
                   number: 3001
-            path: /test(/|$)(.*)
+            path: /test2(/|$)(.*)
             pathType: Prefix
