@@ -1,0 +1,2 @@
+endpoint: http://postgres:postgres@db:5432/postgres
+datamodel: datamodel.prisma

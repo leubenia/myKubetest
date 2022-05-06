@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/force-ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/server-alias: kubernetes.docker.internal
+  labels:
+    app: postgres
+  name: postgres
+
+spec:
+  rules:
+    - host: kubernetes.docker.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: postgres-headless-svc
+                port:
+                  number: 5432
+            path: /
+            pathType: Prefix
